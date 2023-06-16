@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'get_api_model/get_api_response.dart';
+import 'http_service/get_api_response.dart';
 import 'model/ProductList.dart';
 
 class GetHomeScreen extends StatefulWidget {
@@ -31,6 +31,7 @@ class _GetHomeScreenState extends State<GetHomeScreen> {
       appBar: AppBar(
         title: const Text('Get API Demo'),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: [

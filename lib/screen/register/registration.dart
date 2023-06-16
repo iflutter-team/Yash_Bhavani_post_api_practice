@@ -1,6 +1,10 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: use_build_context_synchronously
 
-import 'login_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:post_api_practice/screen/register/registration_api.dart';
+
+import '../../model/post_api_model.dart';
+import '../login/login_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -13,15 +17,34 @@ class RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController emailReg = TextEditingController();
   TextEditingController passwordReg = TextEditingController();
   TextEditingController nameReg = TextEditingController();
-  TextEditingController ageReg = TextEditingController();
-  TextEditingController hobbyReg = TextEditingController();
+  TextEditingController lastReg = TextEditingController();
 
   void clearTextField() {
     emailReg.clear();
     passwordReg.clear();
     nameReg.clear();
-    ageReg.clear();
-    hobbyReg.clear();
+    lastReg.clear();
+  }
+
+  UserSingUp? user;
+
+  Future userSignUp() async {
+    Map<String, dynamic> body = {
+      'EmailId': emailReg.text.trim(),
+      'Password': passwordReg.text.trim(),
+      'FirstName': nameReg.text.trim(),
+      'LastName': lastReg.text.trim(),
+    };
+
+    user = await RegisterAPI.registerUser(body);
+
+    if (user != null && user!.status == 1) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LoginScreen(),
+          ));
+    }
   }
 
   @override
@@ -50,6 +73,26 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                   height: 20,
                 ),
                 TextField(
+                  controller: nameReg,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      hintText: 'Name'),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: lastReg,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      hintText: 'Last Name'),
+                ),
+                const SizedBox(height: 10),
+                TextField(
                   controller: emailReg,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -70,36 +113,6 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 const SizedBox(
                   height: 10,
-                ),
-                TextField(
-                  controller: nameReg,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      hintText: 'NAme'),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: ageReg,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      hintText: 'Age'),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: hobbyReg,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      hintText: 'Hobby'),
                 ),
                 Row(
                   children: [
@@ -146,7 +159,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                     //   // ignore: use_build_context_synchronously
                     //   // Navigator.of(context).pop();
                     // },
-                    onPressed: () {},
+                    onPressed: () => userSignUp(),
                     child: const Text('Registration')),
               ],
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'registration.dart';
+import '../../home_screen.dart';
+import '../register/registration.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailLogin = TextEditingController();
   TextEditingController passwordLogin = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +77,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const GetHomeScreen(),
+                      ));
                   // checkData(context, emailLogin.text, passwordLogin.text);
                 },
                 child: const Text('Login'),
