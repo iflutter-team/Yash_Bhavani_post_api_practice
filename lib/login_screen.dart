@@ -22,8 +22,6 @@ class _LoginScreenState extends State<LoginScreen> {
       //   ),
       // ),
       body: Container(
-        height: 760,
-        width: 360,
         decoration: const BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.fill,

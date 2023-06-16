@@ -32,8 +32,6 @@ class RegistrationScreenState extends State<RegistrationScreen> {
       // ),
       body: SingleChildScrollView(
         child: Container(
-          height: 760,
-          width: 360,
           decoration: const BoxDecoration(
               image: DecorationImage(
                   fit: BoxFit.fill,
