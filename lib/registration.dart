@@ -30,7 +30,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
       // appBar: AppBar(
       //   title: const Text('Registration'),
       // ),
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Container(
           decoration: const BoxDecoration(
               image: DecorationImage(
@@ -38,7 +38,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                   image: NetworkImage(
                       'https://img.freepik.com/free-vector/blue-curve-abstract-background_53876-99570.jpg'))),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
