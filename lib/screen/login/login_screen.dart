@@ -1,10 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:post_api_practice/model/post_api_model.dart';
 import 'package:post_api_practice/screen/login/login_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../model/login_model.dart';
 import '../home_screen/home_screen.dart';
 import '../register/registration.dart';
 
@@ -25,23 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
     pref = await SharedPreferences.getInstance();
   }
 
-  // setPref() {
-  //   key = pref!.getString('LoginKey');
-  //   if (key == 'LoginKey') {
-  //     Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => const GetHomeScreen(),
-  //         ));
-  //   } else {
-  //     Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => const LoginScreen(),
-  //         ));
-  //   }
-  // }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -50,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setPref();
   }
 
-  UserSingUp? user;
+  UserLogin? user;
 
   Future checkLoginUser() async {
     Map<String, dynamic>? body = {
@@ -61,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
     user = await LoginAPI.loginPostAPI(body: body);
     print(user);
     if (user != null && user!.status == 1) {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) {

@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:post_api_practice/model/post_api_model.dart';
+import 'package:post_api_practice/model/login_model.dart';
+import 'package:post_api_practice/model/singup_model.dart';
 import 'package:post_api_practice/utils/api_class.dart';
 
 class HttpServiceForLogin {
@@ -34,9 +35,9 @@ class LoginAPI {
       );
 
       if (response != null && response.statusCode == 200) {
-        print(response.body.runtimeType);
+        print(response.body);
 
-        return userSingUpFromJson(response.body);
+        return userLoginFromJson(response.body);
 
       } else {
         print('Failed');

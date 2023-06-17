@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:post_api_practice/screen/register/registration_api.dart';
 
-import '../../model/post_api_model.dart';
+import '../../model/singup_model.dart';
 import '../login/login_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {

@@ -2,7 +2,7 @@ import 'package:post_api_practice/utils/api_class.dart';
 import 'package:http/http.dart' as http;
 
 import '../../http_service/post_api.dart';
-import '../../model/post_api_model.dart';
+import '../../model/singup_model.dart';
 
 class RegisterAPI {
   static Future registerUser(Map<String, dynamic> body) async {

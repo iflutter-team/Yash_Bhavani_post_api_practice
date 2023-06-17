@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:post_api_practice/screen/login/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../http_service/get_api_response.dart';
@@ -44,6 +45,11 @@ class _GetHomeScreenState extends State<GetHomeScreen> {
           IconButton(
             onPressed: () {
               preferences!.clear();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginScreen(),
+                  ));
             },
             icon: const Icon(Icons.logout),
           ),
