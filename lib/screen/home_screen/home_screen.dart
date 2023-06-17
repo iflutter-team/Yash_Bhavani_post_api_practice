@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'http_service/get_api_response.dart';
-import 'model/ProductList.dart';
+import '../../http_service/get_api_response.dart';
+import '../../model/ProductList.dart';
 
 class GetHomeScreen extends StatefulWidget {
   const GetHomeScreen({super.key});
@@ -13,14 +14,21 @@ class GetHomeScreen extends StatefulWidget {
 ProductList? productList;
 
 class _GetHomeScreenState extends State<GetHomeScreen> {
+  SharedPreferences? preferences;
+
+  Future<void> setPref() async {
+    preferences = await SharedPreferences.getInstance();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    setPref();
   }
 
   Future<ProductList?> getData() async {
-    productList = await APIResponse.getAPIData();
+    productList = await APIResponse.getHomeAPIData();
     setState(() {});
     return productList;
   }
@@ -32,12 +40,20 @@ class _GetHomeScreenState extends State<GetHomeScreen> {
         title: const Text('Get API Demo'),
         centerTitle: true,
         automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            onPressed: () {
+              preferences!.clear();
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        ],
       ),
       body: Column(
         children: [
           Expanded(
             child: FutureBuilder(
-              future: APIResponse.getAPIData(),
+              future: APIResponse.getHomeAPIData(),
               builder: (context, AsyncSnapshot<dynamic> snapshot) {
                 if (!snapshot.hasData) {
                   return const Align(

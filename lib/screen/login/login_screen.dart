@@ -1,6 +1,11 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: use_build_context_synchronously
 
-import '../../home_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:post_api_practice/model/post_api_model.dart';
+import 'package:post_api_practice/screen/login/login_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../home_screen/home_screen.dart';
 import '../register/registration.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -14,15 +19,64 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailLogin = TextEditingController();
   TextEditingController passwordLogin = TextEditingController();
 
+  SharedPreferences? pref;
+
+  Future<void> setPref() async {
+    pref = await SharedPreferences.getInstance();
+  }
+
+  // setPref() {
+  //   key = pref!.getString('LoginKey');
+  //   if (key == 'LoginKey') {
+  //     Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => const GetHomeScreen(),
+  //         ));
+  //   } else {
+  //     Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => const LoginScreen(),
+  //         ));
+  //   }
+  // }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    setPref();
+  }
+
+  UserSingUp? user;
+
+  Future checkLoginUser() async {
+    Map<String, dynamic>? body = {
+      'email': emailLogin.text.trim(),
+      'Password': passwordLogin.text.trim(),
+    };
+
+    user = await LoginAPI.loginPostAPI(body: body);
+    print(user);
+    if (user != null && user!.status == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            pref!.setString('LoginKey', 'Login Successful');
+            print(pref);
+            return const GetHomeScreen();
+          },
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      // backgroundColor: Col,
-      //   title: const Text(
-      //     'Login',
-      //   ),
-      // ),
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
@@ -76,14 +130,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const GetHomeScreen(),
-                      ));
-                  // checkData(context, emailLogin.text, passwordLogin.text);
-                },
+                onPressed: () => checkLoginUser(),
+                // checkData(context, emailLogin.text, passwordLogin.text);
+
                 child: const Text('Login'),
               )
             ],
